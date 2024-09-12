@@ -18,13 +18,26 @@ const config: Config = {
       backgroundColor: {
         body: "rgba(48, 80, 125, 0.25)",
         mainbgColor: "rgba(106, 108, 224, 1)",
-        todoBgColor: "#E8F1FD",
+        todoBgColor: "rgba(246, 250, 255, 1)",
+        todoChildBgColor: "rgba(232, 241, 253, 1)",
         popUpBg: "rgba(144, 138, 138, 0.5)",
+        hrBg: "rgba(106, 108, 224, 0.3)",
       },
       boxShadow: {
         card: "0px 2px 4px 0px rgba(106, 108, 224, 0.15)",
         todo: "1px 1px 4px 0px rgba(48, 80, 125, 0.25) inset",
+        button: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
       },
+      borderColor: {
+        mainBorder: "rgba(106, 108, 224, 1)",
+      },
+    },
+    screens: {
+      md: { min: "375px" },
+      md600: { min: "600px" },
+      sm: { min: "768px" },
+      lg: { min: "1024px" },
+      xl: { min: "1440px" },
     },
   },
   plugins: [],

@@ -1,24 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import useToDoStore from "@/utils/ToDoStore";
+import { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-export default function Search() {
+interface Prop {
+  pathname: string;
+}
+
+export default function Search({ pathname }: Prop) {
+  const { searchValue, changeSearchValue } = useToDoStore((state) => ({
+    searchValue: state.searchValue,
+    changeSearchValue: state.changeSearchValue,
+  }));
+
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState("");
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    changeSearchValue(value);
+  };
 
   return (
-    <div className="w-full relative">
+    <div className="w-full sm:w-[50%] relative">
       <label
-        className={`absolute left-3 top-2 text-placeholder transition-all duration-200 ease-in-out
-            ${isFocused || value ? "top-[0px] text-[10px] text-blue-500" : ""}`}
+        htmlFor="searchInput"
+        className={`absolute left-3  text-placeholder transition-all duration-200 ease-in-out
+            ${
+              isFocused || searchValue
+                ? "top-[0px] text-[10px] text-blue-500"
+                : "text-xs top-[14px]"
+            }`}
       >
         Search for notes
       </label>
       <input
+        id="searchInput"
         className="w-full px-3 py-3 border rounded-md text-xs outline-none transition-all shadow-card"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={searchValue}
+        onChange={handleSearch}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
       />
