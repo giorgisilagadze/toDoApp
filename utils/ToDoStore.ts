@@ -1,14 +1,6 @@
 import { useEffect } from "react";
 import { create } from "zustand";
 
-const getLocalStorage = (key: string) => {
-  if (typeof window !== "undefined") {
-    const storedData = localStorage.getItem(key);
-    return storedData ? JSON.parse(storedData) : [];
-  }
-  return [];
-};
-
 const setLocalStorage = (key: string, value: ToDo[]) => {
   if (typeof window !== "undefined") {
     localStorage.setItem(key, JSON.stringify(value));
@@ -16,13 +8,19 @@ const setLocalStorage = (key: string, value: ToDo[]) => {
 };
 
 const useToDoStore = create<ToDoStore>((set, get) => ({
-  toDoes: getLocalStorage("toDoes"),
-  completedToDoes: getLocalStorage("completedToDoes"),
+  toDoes: [],
   searchValue: "",
   addToDo: (toDo: ToDo) => {
     set((state) => {
       const updatedToDoes = [...state.toDoes, toDo];
       setLocalStorage("toDoes", updatedToDoes);
+      return { toDoes: updatedToDoes };
+    });
+  },
+  setToDoes: (toDo: ToDo[]) => {
+    set(() => {
+      const updatedToDoes = [...toDo];
+
       return { toDoes: updatedToDoes };
     });
   },
@@ -38,21 +36,17 @@ const useToDoStore = create<ToDoStore>((set, get) => ({
   },
   completeToDo: (toDo: ToDo) => {
     const toDoes = get().toDoes;
-    const filteredToDoes = toDoes.filter((item) => item.id !== toDo.id);
-    set((state) => {
-      const updatedCompletedToDoes = [
-        ...state.completedToDoes,
-        { ...toDo, isActive: false },
-      ];
-      setLocalStorage("toDoes", filteredToDoes);
-      setLocalStorage("completedToDoes", updatedCompletedToDoes);
+    const changedToDoes = toDoes.map((item: ToDo) =>
+      item.id == toDo.id ? { ...item, isActive: false } : item
+    );
+    set(() => {
+      setLocalStorage("toDoes", changedToDoes);
       return {
-        toDoes: filteredToDoes,
-        completedToDoes: updatedCompletedToDoes,
+        toDoes: changedToDoes,
       };
     });
   },
-  deleteActiveToDo: (id: number) => {
+  deleteToDo: (id: number) => {
     const toDoes = get().toDoes;
     const filteredToDoes = toDoes.filter((item) => item.id !== id);
     set(() => {
@@ -60,26 +54,17 @@ const useToDoStore = create<ToDoStore>((set, get) => ({
       return { toDoes: filteredToDoes };
     });
   },
-  deleteCompletedToDo: (id: number) => {
-    const completedToDoes = get().completedToDoes;
-    const filteredCompletedToDoes = completedToDoes.filter(
-      (item) => item.id !== id
-    );
+  clearToDoes: (pathname: string) => {
+    const toDoes = get().toDoes;
+    let filteredToDoes: ToDo[] = [];
+    if (pathname == "/") {
+      filteredToDoes = toDoes.filter((item: ToDo) => item.isActive == false);
+    } else if (pathname == "/history") {
+      filteredToDoes = toDoes.filter((item: ToDo) => item.isActive == true);
+    }
     set(() => {
-      setLocalStorage("completedToDoes", filteredCompletedToDoes);
-      return { completedToDoes: filteredCompletedToDoes };
-    });
-  },
-  clearAllActiveToDoes: () => {
-    set(() => {
-      setLocalStorage("toDoes", []);
-      return { toDoes: [] };
-    });
-  },
-  clearAllCompletedToDoes: () => {
-    set(() => {
-      setLocalStorage("completedToDoes", []);
-      return { completedToDoes: [] };
+      setLocalStorage("toDoes", filteredToDoes);
+      return { toDoes: filteredToDoes };
     });
   },
   changeSearchValue: (text: string) => {

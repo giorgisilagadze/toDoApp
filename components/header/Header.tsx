@@ -11,14 +11,14 @@ import Link from "next/link";
 import useToDoStore from "@/utils/ToDoStore";
 
 export default function Header() {
-  const { clearAllActiveToDoes, clearAllCompletedToDoes } = useToDoStore();
+  const { clearToDoes } = useToDoStore();
   const pathname = usePathname();
 
   const handleClear = () => {
     if (pathname == "/") {
-      clearAllActiveToDoes();
+      clearToDoes("/");
     } else {
-      clearAllCompletedToDoes();
+      clearToDoes("/history");
     }
   };
 

@@ -28,7 +28,7 @@ export default function Search({ pathname }: Prop) {
         className={`absolute left-3  text-placeholder transition-all duration-200 ease-in-out
             ${
               isFocused || searchValue
-                ? "top-[0px] text-[10px] text-blue-500"
+                ? "top-[0px] text-[10px]"
                 : "text-xs top-[14px]"
             }`}
       >

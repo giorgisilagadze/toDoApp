@@ -13,18 +13,9 @@ interface Prop {
 }
 
 export default function ToDoCard({ item }: Prop) {
-  const {
-    completeToDo,
-    completedToDoes,
-    toDoes,
-    deleteActiveToDo,
-    deleteCompletedToDo,
-  } = useToDoStore((state) => ({
+  const { completeToDo, deleteToDo } = useToDoStore((state) => ({
     completeToDo: state.completeToDo,
-    completedToDoes: state.completedToDoes,
-    toDoes: state.toDoes,
-    deleteActiveToDo: state.deleteActiveToDo,
-    deleteCompletedToDo: state.deleteCompletedToDo,
+    deleteToDo: state.deleteToDo,
   }));
 
   const [isToDoVisible, setIsToDoVisible] = useState(false);
@@ -88,7 +79,7 @@ export default function ToDoCard({ item }: Prop) {
           <div className="w-full flex items-center justify-between">
             <RiDeleteBin6Line
               className="text-[20px] text-[#F58786] cursor-pointer lg:hover:opacity-50 duration-200"
-              onClick={() => deleteCompletedToDo(item.id)}
+              onClick={() => deleteToDo(item.id)}
             />
             <div className="flex items-center gap-1">
               <p className="text-xs text-todoColor font-medium">Completed</p>
@@ -108,7 +99,7 @@ export default function ToDoCard({ item }: Prop) {
               />
               <RiDeleteBin6Line
                 className="text-[20px] text-[#F58786] cursor-pointer lg:hover:opacity-50 duration-200"
-                onClick={() => deleteActiveToDo(item.id)}
+                onClick={() => deleteToDo(item.id)}
               />
             </div>
             <div
@@ -127,7 +118,7 @@ export default function ToDoCard({ item }: Prop) {
         isPopUpVisible={isPopUpVisible}
         setIsPopUpVisible={setIsPopUpVisible}
         title="Edit task"
-        item={item}
+        item={editToDo}
       />
     </>
   );
