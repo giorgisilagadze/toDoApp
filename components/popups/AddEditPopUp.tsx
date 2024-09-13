@@ -35,10 +35,7 @@ export default function AddEditPopUp({
   title,
   item,
 }: Props) {
-  const { addToDo, editToDo } = useToDoStore((state) => ({
-    addToDo: state.addToDo,
-    editToDo: state.editToDo,
-  }));
+  const { addToDo, editToDo } = useToDoStore();
 
   const [isFocus, setIsFocus] = useState(false);
 
@@ -129,12 +126,12 @@ export default function AddEditPopUp({
         >
           <div className="w-full relative flex flex-col gap-[2px]">
             <label
-              className={`absolute left-3 text-placeholder transition-all duration-200 ease-in-out ${
-                isFocus || watch("title") !== ""
-                  ? "top-[0px] text-[9px]"
-                  : "text-sm top-2"
-              }`}
               htmlFor="title"
+              className={`absolute left-3 text-placeholder transition-all duration-200 ease-in-out pointer-events-none ${
+                isFocus || watch("title") !== ""
+                  ? "top-0 text-[9px]"
+                  : "top-[8px] text-sm"
+              }`}
             >
               Task Name
             </label>

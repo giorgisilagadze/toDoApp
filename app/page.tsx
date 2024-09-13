@@ -6,32 +6,25 @@ import ToDoCard from "@/components/todoCard/ToDoCard";
 import AddEditCard from "@/components/popups/AddEditPopUp";
 import { useEffect, useState } from "react";
 import useToDoStore from "@/utils/ToDoStore";
-import useScreenSize from "@/hooks/useScreenSize";
 
 export default function Home() {
-  const { toDoes, searchValue, setTodos } = useToDoStore((state) => ({
-    toDoes: state.toDoes,
-    searchValue: state.searchValue,
-    setTodos: state.setToDoes,
-  }));
+  const { toDoes, searchValue, setToDoes } = useToDoStore();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedData = localStorage.getItem("toDoes");
       if (storedData) {
-        setTodos(JSON.parse(storedData));
+        setToDoes(JSON.parse(storedData));
       }
     }
   }, []);
-
-  const screenSize = useScreenSize();
 
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
 
   return (
     <>
       <div className="w-full grid grid-cols-1 md600:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 h-[100px] gap-3 lg:gap-5 px-5 pb-5">
-        {toDoes.length !== 0 ? (
+        {toDoes.filter((item: ToDo) => item.isActive == true).length !== 0 ? (
           toDoes
             .filter((item: ToDo) => item.isActive == true)
             .filter((item: ToDo) =>

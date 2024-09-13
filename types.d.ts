@@ -7,7 +7,6 @@ interface ToDo {
 
 interface ToDoStore {
   toDoes: ToDo[];
-  // completedToDoes: ToDo[];
   searchValue: string;
   addToDo: (toDo: ToDo) => void;
   setToDoes: (toDo: ToDo[]) => void;

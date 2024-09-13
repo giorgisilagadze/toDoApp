@@ -13,10 +13,7 @@ interface Prop {
 }
 
 export default function ToDoCard({ item }: Prop) {
-  const { completeToDo, deleteToDo } = useToDoStore((state) => ({
-    completeToDo: state.completeToDo,
-    deleteToDo: state.deleteToDo,
-  }));
+  const { completeToDo, deleteToDo } = useToDoStore();
 
   const [isToDoVisible, setIsToDoVisible] = useState(false);
   const [pHeight, setPHeight] = useState<number>(0);
@@ -34,7 +31,7 @@ export default function ToDoCard({ item }: Prop) {
   return (
     <>
       <div
-        className={`w-full p-3 rounded-[12px] flex flex-col bg-todoBgColor ${
+        className={`w-full p-3 rounded-[12px] flex flex-col bg-todoBgColor self-start ${
           isToDoVisible
             ? "gap-7"
             : !isToDoVisible && item.isActive

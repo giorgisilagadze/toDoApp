@@ -9,10 +9,7 @@ interface Prop {
 }
 
 export default function Search({ pathname }: Prop) {
-  const { searchValue, changeSearchValue } = useToDoStore((state) => ({
-    searchValue: state.searchValue,
-    changeSearchValue: state.changeSearchValue,
-  }));
+  const { searchValue, changeSearchValue } = useToDoStore();
 
   const [isFocused, setIsFocused] = useState(false);
 
