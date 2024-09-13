@@ -1,14 +1,10 @@
 "use client";
 
 import useToDoStore from "@/utils/ToDoStore";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-interface Prop {
-  pathname: string;
-}
-
-export default function Search({ pathname }: Prop) {
+export default function Search() {
   const { searchValue, changeSearchValue } = useToDoStore();
 
   const [isFocused, setIsFocused] = useState(false);

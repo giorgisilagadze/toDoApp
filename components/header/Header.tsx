@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { IoSettingsOutline } from "react-icons/io5";
-import { BsCalendar4Event } from "react-icons/bs";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import Search from "./Search";
@@ -39,7 +38,7 @@ export default function Header() {
           </div>
           <IoSettingsOutline className="text-purple text-[28px]" />
         </div>
-        <Search pathname={pathname} />
+        <Search />
       </div>
       <div className="w-full flex justify-between items-end">
         <div className="flex items-center gap-4">
